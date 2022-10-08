@@ -13,7 +13,7 @@ export const CenteredButton = styled.button`
 `;
 
 export const LongButton = styled(CenteredButton)`
-  width: 150px;
+  width: 163px;
   height: 50px;
 
   border: none;
@@ -67,10 +67,43 @@ export const EqualsButton = styled(LongButton)`
 
 export const KeyPad = styled.div`
   background-color: hsl(223, 31%, 20%);
+  width: 340px;
+  max-width: 340px;
 
-  display: grid;
-  grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 1fr 1fr 1fr 1fr;
+  display: flex;
+  flex-direction: column;
+
+  // display: grid;
+  // grid-template-columns: 1fr 1fr 1fr 1fr;
+  // grid-template-rows: 1fr 1fr 1fr 1fr;
+
   row-gap: 10px;
   column-gap: 20px;
+  padding: 20px;
+`;
+
+export const KeyPadRow = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const Screen = styled.div`
+  width: 340px;
+  height: 60px;
+  border: none;
+  border-radius: 15px;
+  background-color: hsl(224, 36%, 15%);
+
+  font-size: 32px;
+  font-family: League Spartan;
+  font-weigth: 700;
+
+  padding: 20px;
+  display: flex;
+  flex-direction: row;
+  justify-content: flex-end;
+  align-items: center;
+
+  color: white;
 `;
