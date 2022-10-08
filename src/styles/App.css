@@ -4,6 +4,8 @@
   display: flex;
   flex-direction: column;
   align-items: center;
+  justify-content: center;
+  background-color: hsl(222, 26%, 31%);
 }
 
 p,
