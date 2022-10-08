@@ -40,6 +40,18 @@ export const OperationsButton = styled(CenteredButton)`
   }
 `;
 
+export const DeleteButton = styled(OperationsButton)`
+  background-color: hsl(225, 21%, 49%);
+  color: white;
+  box-shadow: 0px 3px 1px hsla(224, 28%, 35%);
+  &:hover {
+    background-color: hsl(225, 21%, 65%);
+  }
+  &:active {
+    background-color: hsl(225, 21%, 40%);
+  }
+`;
+
 export const ResetButton = styled(LongButton)`
   background-color: hsl(225, 21%, 49%);
   color: white;
