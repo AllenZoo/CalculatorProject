@@ -4,14 +4,17 @@ import * as styles from "./styled_components.js";
 
 function App() {
   const [theme, setTheme] = useState(1);
-  const [num, setNum] = useState(9.11);
+  const [num, setNum] = useState("");
   const [displayNum, setDisplayNum] = useState("");
   const [curOp, setCurOp] = useState("");
   const [prevOp, setPrevOp] = useState("");
   const [prevNum, setPrevNum] = useState(0);
 
-  const getDisplayNum = () => {
-    let dNum = num.toLocaleString("en-US", {
+  // writing (add to display), reading (number input creates new number)
+  const [state, setState] = useState("");
+
+  const getDisplayNum = (val) => {
+    let dNum = val.toLocaleString("en-US", {
       minimumFractionDigits: 0,
       maximumFractionDigits: 20,
     });
@@ -20,30 +23,74 @@ function App() {
 
   const helper = () => {};
 
+  // const addToNum = (value) => {
+  //   // add value to end of string
+  //   let dNum = displayNum + value;
+  //   // remove commas for parsing back to string
+  //   dNum = dNum.replace(/,/g, "");
+  //   // parse back into number
+  //   dNum = Number(dNum);
+  //   setNum(dNum);
+  //   // convert back to string with added commas
+  //   dNum = dNum.toLocaleString("en-US");
+  //   console.log(dNum);
+  //   setDisplayNum(dNum);
+  // };
+
+  // value guranteed to be: [0-9]|/.
   const addToNum = (value) => {
-    // add value to end of string
-    let dNum = displayNum + value;
-
-    // remove commas for parsing back to string
-    dNum = dNum.replace(/,/g, "");
-
-    // parse back into number
-    dNum = Number(dNum);
-    setNum(dNum);
-
-    // convert back to string with added commas
-    dNum = dNum.toLocaleString("en-US");
-    console.log(dNum);
-    setDisplayNum(dNum);
+    let newNum = num + value;
+    setNum(newNum);
+    getDisplayNum(newNum);
   };
 
-  const deleteDigit = () => {};
+  const deleteDigit = () => {
+    let newNum = num.substring(0, num.length - 1);
+    console.log(newNum);
+    setNum(newNum);
+    getDisplayNum(newNum);
+  };
 
-  const operatorClicked = (op) => {};
+  const deleteNum = () => {};
+
+  const operatorClicked = (op) => {
+    setPrevNum(num);
+    setNum("");
+    setCurOp(op);
+    getDisplayNum(op);
+  };
+
+  const evaluate = () => {
+    console.log(prevNum, num, curOp);
+    let result = "";
+    switch (curOp) {
+      case "+":
+        result = Number(prevNum) + Number(num);
+        break;
+      case "-":
+        result = Number(prevNum) - Number(num);
+        break;
+      case "x":
+        result = Number(prevNum) * Number(num);
+        break;
+      case "/":
+        result = Number(prevNum) / Number(num);
+        break;
+    }
+    console.log("results: " + result);
+    if (result !== "") {
+      console.log("setting number: " + result);
+      setNum(result);
+    }
+
+    //getDisplayNum(result);
+  };
 
   useEffect(() => {
-    getDisplayNum();
-  });
+    console.log("called!");
+    evaluate();
+    //getDisplayNum();
+  }, [curOp]);
 
   return (
     <div className="App">
@@ -72,7 +119,13 @@ function App() {
             >
               9
             </styles.OperationsButton>
-            <styles.DeleteButton onClick={helper}>DEL</styles.DeleteButton>
+            <styles.DeleteButton
+              onClick={function () {
+                deleteDigit();
+              }}
+            >
+              DEL
+            </styles.DeleteButton>
           </styles.KeyPadRow>
           <styles.KeyPadRow>
             <styles.OperationsButton
@@ -98,7 +151,7 @@ function App() {
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                setCurOp("+");
+                operatorClicked("+");
               }}
             >
               +
@@ -128,7 +181,7 @@ function App() {
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                setCurOp("-");
+                operatorClicked("-");
               }}
             >
               -
@@ -151,14 +204,14 @@ function App() {
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                setCurOp("/");
+                operatorClicked("/");
               }}
             >
               /
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                setCurOp("x");
+                operatorClicked("x");
               }}
             >
               x
