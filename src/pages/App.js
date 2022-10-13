@@ -4,7 +4,6 @@ import * as styles from "./styled_components.js";
 import { ThemeProvider } from "styled-components";
 
 function App() {
-  const [theme, setTheme] = useState(1);
   const [curNum, setCurNum] = useState(0);
   const [prevNum, setPrevNum] = useState(0);
 
@@ -138,12 +137,6 @@ function App() {
     }
   };
 
-  useEffect(() => {
-    //console.log("called!");
-    // evaluate();
-    updateDisplayName();
-  }, [curNum]);
-
   const themeStyle1 = {
     // number keys + - x and /
     op_key_bg: "hsl(30, 25%, 89%)",
@@ -252,10 +245,43 @@ function App() {
     t_align: "flex-end",
   };
 
+  const [counter, setCounter] = useState(0);
+  const [theme, setTheme] = useState(themeStyle1);
+  const rotateTheme = () => {
+    console.log("in here " + counter);
+    if (counter < 2) {
+      setCounter(counter + 1);
+    } else {
+      setCounter(0);
+    }
+  };
+
+  const updateTheme = () => {
+    switch (counter) {
+      case 0:
+        setTheme(themeStyle1);
+        break;
+      case 1:
+        setTheme(themeStyle2);
+        break;
+      case 2:
+        setTheme(themeStyle3);
+        break;
+    }
+  };
+
+  useEffect(() => {
+    updateDisplayName();
+  }, [curNum]);
+
+  useEffect(() => {
+    updateTheme();
+  }, [counter]);
+
   return (
     <div className="App">
       <div className="calculator-container">
-        <ThemeProvider theme={themeStyle2}>
+        <ThemeProvider theme={theme}>
           <styles.GlobalWrapper>
             <div className="subwrapper">
               <styles.TopContainer>
@@ -272,7 +298,11 @@ function App() {
                   <styles.HeaderRightSide>
                     <div className="text">THEME</div>
                     <styles.SliderContainer>
-                      <styles.ThemeButton />
+                      <styles.ThemeButton
+                        onClick={function () {
+                          rotateTheme();
+                        }}
+                      />
                     </styles.SliderContainer>
                   </styles.HeaderRightSide>
                 </styles.HeaderContainer>
