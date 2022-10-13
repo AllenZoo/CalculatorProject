@@ -58,12 +58,12 @@ Styled Comonents Version of useContext
 Using useEffect hook to track specific changes:
 
 ```js
-// Changes display to match curNum
+// Changes display to match curNum everytime curNum changes (setCurNum(...))
   useEffect(() => {
     updateDisplayName();
   }, [curNum]);
 
-// Changes to counter updates theme to match
+// Changes to counter (setCounter(...)) updates theme to match
   useEffect(() => {
     updateTheme();
   }, [counter]);
