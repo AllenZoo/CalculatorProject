@@ -28,17 +28,17 @@ Users should be able to:
 - **Bonus**: Have their initial theme preference checked using `prefers-color-scheme` and have any additional changes saved in the browser
 
 ### Screenshot
-Theme 1
+#### Theme 1
 
-![](./screenshot.jpg)
+![](https://github.com/AllenZoo/CalculatorProject/blob/master/CalculatorProjectScreenshots/Theme1.png)
 
-Theme 2
+#### Theme 2
 
-![](./screenshot.jpg)
+![](https://github.com/AllenZoo/CalculatorProject/blob/master/CalculatorProjectScreenshots/Theme2.png)
 
-Theme 3
+#### Theme 3
 
-![](./screenshot.jpg)
+![](https://github.com/AllenZoo/CalculatorProject/blob/master/CalculatorProjectScreenshots/Theme3.png)
 
 ### Links
 
