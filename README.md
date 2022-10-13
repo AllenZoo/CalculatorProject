@@ -57,7 +57,6 @@ Users should be able to:
 ### What I learned
 
 
-
 Styled Comonents Version of useContext
 ```html
 <ThemeProvider theme={theme}> </ThemeProvider>
@@ -78,6 +77,30 @@ Using useEffect hook to track specific changes:
 
 ```
 
+
+Some js that rounds buggy js floating point numbers
+```js
+let result = "";
+let num = Number(prevNum);
+let num2 = Number(curNum);
+
+switch (curOp) {
+  case "+":
+    result = Number(prevNum) + Number(curNum);
+    break;
+  case "-":
+    result = Number(prevNum) - Number(curNum);
+    break;
+  case "x":
+    result = Number(prevNum) * Number(curNum);
+    break;
+  case "/":
+    result = Number(prevNum) / Number(curNum);
+    break;
+}
+// MAGIC LINE
+result = Math.round((result + Number.EPSILON) * 1000000) / 1000000;
+```
 
 ### Continued development
 
