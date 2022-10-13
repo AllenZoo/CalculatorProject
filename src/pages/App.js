@@ -21,7 +21,7 @@ function App() {
   };
 
   const handleDecimalPress = () => {
-    if (prevPress === "equals") {
+    if (prevPress === "equals" || prevPress === "decimal") {
       return;
     }
 
@@ -33,15 +33,21 @@ function App() {
       strNum += ".";
       setCurNum(strNum);
     }
+    setPrevPress("decimal");
   };
 
   // value guranteed to be: [0-9]
   const handleNumPress = (value) => {
+    let strNum = curNum + "";
     if (prevPress === "op") {
       setCurNum(value);
     } else if (prevPress === "equals") {
       setCurNum(value);
       setPrevNum(0);
+    } else if (prevPress === "decimal" || strNum.indexOf(".") >= 0) {
+      let strNum = curNum;
+      strNum += value;
+      setCurNum(strNum);
     } else {
       let strNum = curNum.toString();
       strNum += value;
@@ -275,7 +281,7 @@ function App() {
             </styles.EqualsButton>
           </styles.KeyPadRow>
         </styles.KeyPad>
-        <button
+        {/* <button
           onClick={console.log(
             "curNum: " +
               curNum +
@@ -288,7 +294,7 @@ function App() {
           )}
         >
           Test
-        </button>
+        </button> */}
       </div>
     </div>
   );
