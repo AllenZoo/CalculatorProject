@@ -26,7 +26,7 @@ function App() {
       setCurNum(value);
     } else if (prevPress === "equals") {
       setCurNum(value);
-      setPrevNum(NaN);
+      setPrevNum(0);
     } else {
       let strNum = curNum.toString();
       strNum += value;
@@ -53,6 +53,10 @@ function App() {
   };
 
   const handleDelete = () => {
+    if (prevPress === "equals") {
+      return;
+    }
+
     let strNum = curNum.toString();
 
     if (strNum.length > 1) {
@@ -65,21 +69,21 @@ function App() {
     setCurNum(newNum);
   };
 
-  const handleEqualsPress = () => {
-    if (prevPress === "op") {
-    } else if (curOp !== "") {
-    } else if (prevPress === "num") {
-      evaluate();
-    }
+  const handleReset = () => {
+    setCurNum(0);
+    setPrevNum(0);
+    setCurOp("");
   };
 
-  const deleteNum = () => {};
-
-  const operatorClicked = (op) => {
-    // setPrevNum(num);
-    // setNum("");
-    // setCurOp(op);
-    // updateDisplayName(op);
+  const handleEqualsPress = () => {
+    if (prevPress === "op") {
+    } else if (prevPress === "num") {
+      evaluate();
+      setCurOp("");
+    } else if (curOp !== "") {
+    } else if (prevPress === "equals") {
+    }
+    setPrevPress("equals");
   };
 
   const evaluate = () => {
@@ -99,9 +103,10 @@ function App() {
         result = Number(prevNum) / Number(curNum);
         break;
     }
-    //console.log("results: " + result);
+    console.log("results: " + result);
     if (result !== "") {
       //console.log("setting number: " + result);
+      setPrevNum(result);
       setCurNum(result);
       setPrevPress("eval");
     }
@@ -239,7 +244,13 @@ function App() {
             </styles.OperationsButton>
           </styles.KeyPadRow>
           <styles.KeyPadRow>
-            <styles.ResetButton>RESET</styles.ResetButton>
+            <styles.ResetButton
+              onClick={function () {
+                handleReset();
+              }}
+            >
+              RESET
+            </styles.ResetButton>
             <styles.EqualsButton
               onClick={function () {
                 handleEqualsPress();
@@ -256,7 +267,9 @@ function App() {
               " prevNum: " +
               prevNum +
               " prevPress: " +
-              prevPress
+              prevPress +
+              " curOp: " +
+              curOp
           )}
         >
           Test
