@@ -20,7 +20,22 @@ function App() {
     setDisplayNum(dNum);
   };
 
-  // value guranteed to be: [0-9]|/.
+  const handleDecimalPress = () => {
+    if (prevPress === "equals") {
+      return;
+    }
+
+    let strNum = curNum.toString();
+    if (strNum.indexOf(".") >= 0) {
+      //found decimal already in num
+      return;
+    } else {
+      strNum += ".";
+      setCurNum(strNum);
+    }
+  };
+
+  // value guranteed to be: [0-9]
   const handleNumPress = (value) => {
     if (prevPress === "op") {
       setCurNum(value);
@@ -216,7 +231,7 @@ function App() {
           <styles.KeyPadRow>
             <styles.OperationsButton
               onClick={function () {
-                console.log("not implemented yet :)");
+                handleDecimalPress();
               }}
             >
               .
