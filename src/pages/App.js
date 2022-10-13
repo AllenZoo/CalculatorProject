@@ -128,7 +128,7 @@ function App() {
         result = Number(prevNum) / Number(curNum);
         break;
     }
-    result = Math.round((result + Number.EPSILON) * 100000) / 1000000;
+    result = Math.round((result + Number.EPSILON) * 1000000) / 1000000;
     if (result !== "") {
       //console.log("setting number: " + result);
       setPrevNum(result);
@@ -248,7 +248,6 @@ function App() {
   const [counter, setCounter] = useState(0);
   const [theme, setTheme] = useState(themeStyle1);
   const rotateTheme = () => {
-    console.log("in here " + counter);
     if (counter < 2) {
       setCounter(counter + 1);
     } else {
