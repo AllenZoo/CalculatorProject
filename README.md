@@ -48,13 +48,26 @@ Users should be able to:
 
 ### What I learned
 
-Use this section to recap over some of your major learnings while working through this project. Writing these out and providing code samples of areas you want to highlight is a great way to reinforce your own knowledge.
 
-To see how you can add code snippets, see below:
 
 Styled Comonents Version of useContext
 ```html
 <ThemeProvider theme={theme}> </ThemeProvider>
+```
+
+Using useEffect hook to track specific changes:
+
+```js
+// Changes display to match curNum
+  useEffect(() => {
+    updateDisplayName();
+  }, [curNum]);
+
+// Changes to counter updates theme to match
+  useEffect(() => {
+    updateTheme();
+  }, [counter]);
+
 ```
 
 
