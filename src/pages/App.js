@@ -4,93 +4,114 @@ import * as styles from "./styled_components.js";
 
 function App() {
   const [theme, setTheme] = useState(1);
-  const [num, setNum] = useState("");
-  const [displayNum, setDisplayNum] = useState("");
-  const [curOp, setCurOp] = useState("");
-  const [prevOp, setPrevOp] = useState("");
+  const [curNum, setCurNum] = useState(0);
   const [prevNum, setPrevNum] = useState(0);
 
-  // writing (add to display), reading (number input creates new number)
-  const [state, setState] = useState("");
+  const [displayNum, setDisplayNum] = useState("");
+  const [curOp, setCurOp] = useState("");
 
-  const getDisplayNum = (val) => {
-    let dNum = val.toLocaleString("en-US", {
+  const [prevPress, setPrevPress] = useState("");
+
+  const updateDisplayName = () => {
+    let dNum = curNum.toLocaleString("en-US", {
       minimumFractionDigits: 0,
       maximumFractionDigits: 20,
     });
     setDisplayNum(dNum);
   };
 
-  const helper = () => {};
-
-  // const addToNum = (value) => {
-  //   // add value to end of string
-  //   let dNum = displayNum + value;
-  //   // remove commas for parsing back to string
-  //   dNum = dNum.replace(/,/g, "");
-  //   // parse back into number
-  //   dNum = Number(dNum);
-  //   setNum(dNum);
-  //   // convert back to string with added commas
-  //   dNum = dNum.toLocaleString("en-US");
-  //   console.log(dNum);
-  //   setDisplayNum(dNum);
-  // };
-
   // value guranteed to be: [0-9]|/.
-  const addToNum = (value) => {
-    let newNum = num + value;
-    setNum(newNum);
-    getDisplayNum(newNum);
+  const handleNumPress = (value) => {
+    if (prevPress === "op") {
+      setCurNum(value);
+    } else if (prevPress === "equals") {
+      setCurNum(value);
+      setPrevNum(NaN);
+    } else {
+      let strNum = curNum.toString();
+      strNum += value;
+
+      let newNum = Number(strNum);
+      setCurNum(newNum);
+    }
+
+    setPrevPress("num");
   };
 
-  const deleteDigit = () => {
-    let newNum = num.substring(0, num.length - 1);
-    console.log(newNum);
-    setNum(newNum);
-    getDisplayNum(newNum);
+  /* op = one of +, -, x, or /        */
+  const handleOpPress = (op) => {
+    if (prevPress === "op") {
+      setCurOp(op);
+    } else if (curOp !== "") {
+      evaluate();
+    } else {
+      setPrevNum(curNum);
+    }
+
+    setCurOp(op);
+    setPrevPress("op");
+  };
+
+  const handleDelete = () => {
+    let strNum = curNum.toString();
+
+    if (strNum.length > 1) {
+      strNum = strNum.substring(0, strNum.length - 1);
+    } else {
+      strNum = "0";
+    }
+
+    let newNum = Number(strNum);
+    setCurNum(newNum);
+  };
+
+  const handleEqualsPress = () => {
+    if (prevPress === "op") {
+    } else if (curOp !== "") {
+    } else if (prevPress === "num") {
+      evaluate();
+    }
   };
 
   const deleteNum = () => {};
 
   const operatorClicked = (op) => {
-    setPrevNum(num);
-    setNum("");
-    setCurOp(op);
-    getDisplayNum(op);
+    // setPrevNum(num);
+    // setNum("");
+    // setCurOp(op);
+    // updateDisplayName(op);
   };
 
   const evaluate = () => {
-    console.log(prevNum, num, curOp);
+    //console.log(prevNum, num, curOp);
     let result = "";
     switch (curOp) {
       case "+":
-        result = Number(prevNum) + Number(num);
+        result = Number(prevNum) + Number(curNum);
         break;
       case "-":
-        result = Number(prevNum) - Number(num);
+        result = Number(prevNum) - Number(curNum);
         break;
       case "x":
-        result = Number(prevNum) * Number(num);
+        result = Number(prevNum) * Number(curNum);
         break;
       case "/":
-        result = Number(prevNum) / Number(num);
+        result = Number(prevNum) / Number(curNum);
         break;
     }
-    console.log("results: " + result);
+    //console.log("results: " + result);
     if (result !== "") {
-      console.log("setting number: " + result);
-      setNum(result);
+      //console.log("setting number: " + result);
+      setCurNum(result);
+      setPrevPress("eval");
     }
-
-    //getDisplayNum(result);
   };
 
   useEffect(() => {
-    console.log("called!");
-    evaluate();
-    //getDisplayNum();
-  }, [curOp]);
+    //console.log("called!");
+    // evaluate();
+    updateDisplayName();
+  }, [curNum]);
 
   return (
     <div className="App">
@@ -100,28 +121,28 @@ function App() {
           <styles.KeyPadRow>
             <styles.OperationsButton
               onClick={function () {
-                addToNum("7");
+                handleNumPress("7");
               }}
             >
               7
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                addToNum("8");
+                handleNumPress("8");
               }}
             >
               8
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                addToNum("9");
+                handleNumPress("9");
               }}
             >
               9
             </styles.OperationsButton>
             <styles.DeleteButton
               onClick={function () {
-                deleteDigit();
+                handleDelete();
               }}
             >
               DEL
@@ -130,28 +151,28 @@ function App() {
           <styles.KeyPadRow>
             <styles.OperationsButton
               onClick={function () {
-                addToNum("4");
+                handleNumPress("4");
               }}
             >
               4
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                addToNum("5");
+                handleNumPress("5");
               }}
             >
               5
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                addToNum("6");
+                handleNumPress("6");
               }}
             >
               6
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                operatorClicked("+");
+                handleOpPress("+");
               }}
             >
               +
@@ -160,28 +181,28 @@ function App() {
           <styles.KeyPadRow>
             <styles.OperationsButton
               onClick={function () {
-                addToNum("1");
+                handleNumPress("1");
               }}
             >
               1
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                addToNum("2");
+                handleNumPress("2");
               }}
             >
               2
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                addToNum("3");
+                handleNumPress("3");
               }}
             >
               3
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                operatorClicked("-");
+                handleOpPress("-");
               }}
             >
               -
@@ -190,28 +211,28 @@ function App() {
           <styles.KeyPadRow>
             <styles.OperationsButton
               onClick={function () {
-                addToNum(".");
+                console.log("not implemented yet :)");
               }}
             >
               .
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                addToNum("0");
+                handleNumPress("0");
               }}
             >
               0
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                operatorClicked("/");
+                handleOpPress("/");
               }}
             >
               /
             </styles.OperationsButton>
             <styles.OperationsButton
               onClick={function () {
-                operatorClicked("x");
+                handleOpPress("x");
               }}
             >
               x
@@ -219,10 +240,27 @@ function App() {
           </styles.KeyPadRow>
           <styles.KeyPadRow>
             <styles.ResetButton>RESET</styles.ResetButton>
-            <styles.EqualsButton>=</styles.EqualsButton>
+            <styles.EqualsButton
+              onClick={function () {
+                handleEqualsPress();
+              }}
+            >
+              =
+            </styles.EqualsButton>
           </styles.KeyPadRow>
         </styles.KeyPad>
-        {/* <button onClick={console.log(num)}>Test</button> */}
+        <button
+          onClick={console.log(
+            "curNum: " +
+              curNum +
+              " prevNum: " +
+              prevNum +
+              " prevPress: " +
+              prevPress
+          )}
+        >
+          Test
+        </button>
       </div>
     </div>
   );
