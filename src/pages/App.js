@@ -110,6 +110,10 @@ function App() {
   const evaluate = () => {
     //console.log(prevNum, num, curOp);
     let result = "";
+    let num = Number(prevNum);
+    let num2 = Number(curNum);
+
+    console.log(num, num2);
     switch (curOp) {
       case "+":
         result = Number(prevNum) + Number(curNum);
@@ -124,7 +128,7 @@ function App() {
         result = Number(prevNum) / Number(curNum);
         break;
     }
-    console.log("results: " + result);
+    result = Math.round((result + Number.EPSILON) * 100000) / 1000000;
     if (result !== "") {
       //console.log("setting number: " + result);
       setPrevNum(result);
@@ -281,7 +285,7 @@ function App() {
             </styles.EqualsButton>
           </styles.KeyPadRow>
         </styles.KeyPad>
-        {/* <button
+        <button
           onClick={console.log(
             "curNum: " +
               curNum +
@@ -294,7 +298,7 @@ function App() {
           )}
         >
           Test
-        </button> */}
+        </button>
       </div>
     </div>
   );
