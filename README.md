@@ -76,8 +76,8 @@ Using useEffect hook to track specific changes:
 
 ### Useful resources
 
-- [Dynamic Theme Prop]([https://www.example.com](https://stackoverflow.com/questions/42796584/dynamic-theme-in-styled-components)) - Resource helped with making the theme prop dynamic.
-- [Theming]([https://www.example.com](https://styled-components.com/docs/advanced)) - Really awesome article with details of using ThemeProvider from styled-components.
+- [Dynamic Theme Prop](https://stackoverflow.com/questions/42796584/dynamic-theme-in-styled-components) - Resource helped with making the theme prop dynamic.
+- [Theming](https://styled-components.com/docs/advanced) - Really awesome article with details of using ThemeProvider from styled-components.
 
 
 ## Author
