@@ -114,4 +114,5 @@ result = Math.round((result + Number.EPSILON) * 1000000) / 1000000;
 ## Author
 
 - Frontend Mentor - [@AllenZoo](https://www.frontendmentor.io/profile/AllenZoo)
+- GitHub - [@AllenZoo](https://github.com/AllenZoo)
 
